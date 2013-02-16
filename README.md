@@ -17,3 +17,8 @@ Run:
 Alternatively you could cron this, and mail the results daily:
 
     $ mutt -a bill.html -- -s 'accumulus report' mail@example.com
+
+limitations
+-----------
+
+- Only models 100% usage (Heavy utilization).
