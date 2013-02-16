@@ -1,0 +1,49 @@
+
+body {
+    font: 12pt 'lucida grande', 'lucida sans unicode', lucida, verdana, geneva, sans-serif;
+}
+
+th.top {
+    font-size: 14pt;
+    color: #000000;
+}
+.unit {
+    font-size: 10pt;
+    font-weight: normal;
+    color: #aaaaaa;
+}
+
+.level0 {
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+.level1 {
+    font-size: 12pt;
+    font-weight: bold;
+}
+.level1 td {
+    padding-top: 1em;
+}
+.level2 {
+    font-size: 12pt;
+}
+.level3 {
+    font-size: 10pt;
+    color: #aaaaaa;
+}
+
+.label {
+    padding-right: 30px;
+}
+
+.num {
+    font-family: Andale Mono, monospace;
+}
+
+.cost {
+    padding-right: 30px;
+    padding-left: 15px;
+    font-family: Andale Mono, monospace;
+    text-align: right;
+}

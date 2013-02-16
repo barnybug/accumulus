@@ -1,0 +1,32 @@
+regions:
+    us-east: us-east-1
+    us-west: us-west-1
+    us-west-2: us-west-2
+    eu-ireland: eu-west-1
+    apac-sin: ap-southeast-1
+    apac-tokyo: ap-northeast-1
+    sa-east-1: sa-east-1
+
+types:
+    stdODI: m1
+    uODI: t1
+    hiMemODI: m2
+    hiCPUODI: c1
+    clusterComputeI: cc1
+    clusterGPUI: cg1
+    hiIoODI: hi1
+
+subtypes:
+    u: micro
+    sm: small
+    med: medium
+    lg: large
+    xl: xlarge
+    xxl: 2xlarge
+    xxxxl: 4xlarge
+    xxxxxxxxl: 8xlarge
+
+urls:
+    ondemand: http://aws.amazon.com/ec2/pricing/pricing-on-demand-instances.json
+    heavylinux: http://aws.amazon.com/ec2/pricing/ri-heavy-linux.json
+    heavywin: http://aws.amazon.com/ec2/pricing/ri-heavy-mswin.json

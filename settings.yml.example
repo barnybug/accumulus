@@ -1,0 +1,5 @@
+accounts:
+    myaccount:
+        access_key_id: myaccesskey
+        secret_access_key: mysecretkey
+        regions: [eu-west-1]
