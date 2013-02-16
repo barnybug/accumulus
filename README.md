@@ -4,6 +4,8 @@ Amazon EC2 cost calculator.
 
 - Works out current costs and savings that can be achieved using reserved instances.
 
+![screenshot](screenshot.png)
+
 running
 -------
 
