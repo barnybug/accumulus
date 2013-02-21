@@ -143,15 +143,15 @@ class Scanner(object):
         self.access_key = config['access_key_id']
         self.secret_key = config['secret_access_key']
         if 'regions' in config:
-            self.regions = map(boto.ec2.get_region, config['regions'])
+            self.regions = config['regions']
         else:
-            self.regions = boto.ec2.regions()
+            self.regions = AZ_REGIONS.keys()
         
     def scan(self):
         resources = []
         for r in self.regions:
-            self.logger.info('Scanning %s / %s' % (self.account, r.name))
-            ec2 = boto.connect_ec2(region=r,
+            self.logger.info('Scanning %s / %s' % (self.account, r))
+            ec2 = boto.ec2.connect_to_region(r,
                 aws_access_key_id=self.access_key,
                 aws_secret_access_key=self.secret_key)
 
@@ -161,12 +161,16 @@ class Scanner(object):
 
             reservations = []
             for r in rs:
-                p = (r.instance_type, r.availability_zone, r.duration / 31536000)
-                self.logger.info('Reservation: %s / %s / %s' % p)
-                reservations.append(p)
+                for x in xrange(r.instance_count):
+                    p = (r.instance_type, r.availability_zone, r.duration / 31536000)
+                    self.logger.info('Reservation: %s / %s / %s' % p)
+                    reservations.append(p)
 
             # get running instances
             resources.extend(self._instances(ec2, reservations))
+
+            for unused in reservations:
+                self.logger.warn('Unused reservation: %s / %s / %s' % unused)
 
         return resources
 
@@ -180,12 +184,17 @@ class Scanner(object):
             resource = InstResource(self.account, inst)
             self.logger.info('Instance: %s / %s / %s'
                 % (inst.id, inst.instance_type, inst.placement))
-            if (inst.instance_type, inst.placement, 1) in reservations:
-                reservations.remove((inst.instance_type, inst.placement, 1))
+
+            r1 = (inst.instance_type, inst.placement, 1)
+            r3 = (inst.instance_type, inst.placement, 3)
+            if r1 in reservations:
+                reservations.pop(reservations.index(r1))
                 resource.reserved = 1
-            elif (inst.instance_type, inst.placement, 3) in reservations:
-                reservations.remove((inst.instance_type, inst.placement, 3))
+                self.logger.info('Using reservation: %s / %s / %s' % r1)
+            elif r3 in reservations:
+                reservations.pop(reservations.index(r3))
                 resource.reserved = 3
+                self.logger.info('Using reservation: %s / %s / %s' % r3)
             else:
                 resource.reserved = False
             yield resource
